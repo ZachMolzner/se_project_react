@@ -1,0 +1,12 @@
+import "./Footer.css";
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <p className="footer__text">Developed by Zach Molzner</p>
+      <p className="footer__text">© 2025 WTWR</p>
+    </footer>
+  );
+}
+
+export default Footer;

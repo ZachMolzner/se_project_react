@@ -1,0 +1,45 @@
+/* ----- Desktop / default ----- */
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-top: 32px;
+  margin-top: 48px;
+  border-top: 1px solid #d9d9d9;
+
+  color: #000;
+  font-size: 16px;
+  background-color: #f3f3f3;
+}
+
+.footer__text {
+  margin: 0;
+  font-family: Cabinet Grotesk;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: bottom;
+}
+
+/* ----- Mobile (≈ Figma iPhone) ----- */
+
+@media screen and (max-width: 430px) {
+  .footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    font-size: 12px;
+
+    /* keep dev text left, year right, like the Figma,
+       but scaled down and not overflowing */
+    justify-content: space-between;
+  }
+
+  .footer__text {
+    white-space: nowrap;
+  }
+}

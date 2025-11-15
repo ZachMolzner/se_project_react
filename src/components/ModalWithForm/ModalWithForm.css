@@ -1,0 +1,207 @@
+/* ---------- Overlay (background dimmer) ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal_is-opened {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------- Modal container ---------- */
+
+.modal__content {
+  width: 498px;
+  max-width: 100%;
+  max-height: 90vh;
+
+  background-color: #ffffff;
+  border-radius: 20px;
+
+  padding: 24px 32px 32px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ---------- Close button ---------- */
+
+.modal__close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+
+  color: #b3b3b3;
+}
+
+/* ---------- Title ---------- */
+
+.modal__title {
+  margin: 0 0 24px;
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+/* ---------- Form ---------- */
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+/* Labels above inputs */
+.modal__label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Underline-only inputs */
+.modal__input {
+  border: none;
+  border-bottom: 1px solid #000000;
+  padding: 4px 0 6px;
+
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 16px;
+
+  box-sizing: border-box;
+  outline: none;
+  background-color: transparent;
+}
+
+.modal__input::placeholder {
+  color: #b3b3b3;
+}
+
+.modal__input:focus {
+  border-bottom-color: #000000;
+}
+
+/* ---------- Weather Type Fieldset ---------- */
+
+.modal__fieldset {
+  border: none;
+  padding: 0;
+  margin: 24px 0 0;
+}
+
+.modal__legend {
+  padding: 0;
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Radio rows */
+.modal__radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 16px;
+  font-weight: 400;
+  margin: 4px 0;
+}
+
+/* Unselected text */
+.modal__radio-label span {
+  color: #00000080;
+}
+
+/* Selected text */
+.modal__radio-input:checked + span {
+  color: #000000;
+}
+
+/* Radio color */
+.modal__radio-input {
+  accent-color: #000000;
+}
+
+/* ---------- Submit button ---------- */
+
+.modal__submit {
+  margin-top: 32px;
+  align-self: flex-start;
+
+  width: 140px;
+  height: 44px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #000000; /* ACTIVE button is black */
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+/* Disabled state (Figma: #0000004D) */
+.modal__submit:disabled {
+  background-color: #0000004d !important;
+  color: #ffffff80;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Hover only when enabled */
+.modal__submit:not(:disabled):hover {
+  background-color: #333333;
+}
+
+/* ---------- Responsive tweaks ---------- */
+
+@media screen and (max-width: 600px) {
+  .modal__content {
+    width: 90%;
+    height: auto;
+    max-height: 90vh;
+    padding: 20px 20px 24px;
+  }
+
+  .modal__title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .modal__submit {
+    width: 100%;
+    align-self: stretch;
+  }
+}

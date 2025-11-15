@@ -1,0 +1,60 @@
+/* Main.css */
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  background-color: #f3f3f3;
+}
+
+/* “Today is 72°F — you may want to wear:” */
+.main__text {
+  margin: 8px 0 0;
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+/* Cards row */
+.main__cards {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  /* 4 cards, each 325px wide */
+  grid-template-columns: repeat(4, 325px);
+  /* 20px gaps: 4*325 + 3*20 = 1360px -> matches content width */
+  column-gap: 20px;
+  row-gap: 20px;
+
+  justify-content: flex-start; /* left-align with header/footer */
+}
+
+/* Tablet: 2 cards per row */
+@media screen and (max-width: 1200px) {
+  .main__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: 1 card per row */
+@media screen and (max-width: 600px) {
+  .main__cards {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .main__cards {
+    display: grid;
+    grid-template-columns: repeat(2, 164px);
+    justify-content: center;
+    gap: 12px;
+  }
+}
