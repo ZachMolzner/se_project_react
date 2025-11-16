@@ -9,7 +9,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 40px 40px; /* 40px left/right padding */
+  padding: 24px 40px 40px;
 
   display: flex;
   flex-direction: column;
@@ -18,16 +18,13 @@
   box-sizing: border-box;
   background-color: #f3f3f3;
 }
-/* ---------------------------------------
-   PHONE MODE — ALIGN EVERYTHING CENTER
----------------------------------------- */
+
 @media screen and (max-width: 375px) {
   .page__content {
     padding: 16px;
-    text-align: center; /* Center text for headers, main labels, etc. */
+    text-align: center;
   }
 
-  /* Center header content */
   .header {
     flex-direction: column;
     justify-content: center;
@@ -42,22 +39,19 @@
     text-align: center;
   }
 
-  /* Center weather banner */
   .weather-card {
     margin: 0 auto;
   }
 
-  /* Center the “Today is 72°F — you may want to wear:” text */
   .main__text {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* Center card grid */
   .main__cards {
     justify-content: center;
-    grid-template-columns: 1fr !important; /* 1 card per row centered */
+    grid-template-columns: 1fr !important;
   }
 
   .card {
@@ -65,7 +59,6 @@
     margin-right: auto;
   }
 
-  /* Center footer text */
   .footer {
     flex-direction: column;
     justify-content: center;

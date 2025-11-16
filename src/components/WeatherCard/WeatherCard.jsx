@@ -1,8 +1,7 @@
 import "./WeatherCard.css";
 
 function WeatherCard({ temperature, condition, isDay }) {
-  // Normalize condition text for easier matching
-  const normalized = (condition || "").toLowerCase();
+  const normalizedCondition = (condition || "").toLowerCase();
 
   // Determine variant (WTWR supports: clear, cloudy, rain, snow, fog)
   let variant = "clear";
@@ -22,7 +21,6 @@ function WeatherCard({ temperature, condition, isDay }) {
     variant = "fog";
   }
 
-  // Example result:
   // weather-card weather-card_theme_day-rain
   const themeClass = `weather-card_theme_${isDay ? "day" : "night"}-${variant}`;
 

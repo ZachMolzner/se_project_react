@@ -1,5 +1,3 @@
-/* ----- Desktop / default ----- */
-
 .footer {
   width: 100%;
   display: flex;
@@ -26,16 +24,12 @@
   vertical-align: bottom;
 }
 
-/* ----- Mobile (≈ Figma iPhone) ----- */
-
 @media screen and (max-width: 430px) {
   .footer {
     margin-top: 32px;
     padding-top: 20px;
     font-size: 12px;
 
-    /* keep dev text left, year right, like the Figma,
-       but scaled down and not overflowing */
     justify-content: space-between;
   }
 

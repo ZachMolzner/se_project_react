@@ -26,18 +26,13 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const currentDate = new Date().toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
-
   useEffect(() => {
     getCurrentWeather()
       .then((data) => {
-        const parsed = parseWeatherData(data);
+        const parsedWeather = parseWeatherData(data);
 
         const { temperature, city, condition, sunrise, sunset, currentTime } =
-          parsed;
+          parsedWeather;
 
         // Use API's time to determine day vs night
         const isDay = currentTime >= sunrise && currentTime <= sunset;
@@ -101,11 +96,9 @@ function App() {
     <div className="page">
       <div className="page__content">
         <Header
-          date={currentDate}
           city={weatherData.city}
           onAddClothesClick={handleOpenAddClothesModal}
         />
-
         <Main
           temperature={weatherData.temperature}
           condition={weatherData.condition}
@@ -114,10 +107,8 @@ function App() {
           cards={clothingItems}
           onCardClick={handleCardClick}
         />
-
         <Footer />
       </div>
-
       <ModalWithForm
         name="add-garment"
         title="New garment"
@@ -136,7 +127,6 @@ function App() {
             required
           />
         </label>
-
         <label className="modal__label">
           Image
           <input
@@ -147,10 +137,8 @@ function App() {
             required
           />
         </label>
-
         <fieldset className="modal__fieldset">
           <legend className="modal__legend">Select the weather type:</legend>
-
           <label className="modal__radio-label">
             <input
               className="modal__radio-input"
@@ -161,7 +149,6 @@ function App() {
             />
             <span>Hot</span>
           </label>
-
           <label className="modal__radio-label">
             <input
               className="modal__radio-input"
@@ -171,7 +158,6 @@ function App() {
             />
             <span>Warm</span>
           </label>
-
           <label className="modal__radio-label">
             <input
               className="modal__radio-input"
@@ -183,7 +169,6 @@ function App() {
           </label>
         </fieldset>
       </ModalWithForm>
-
       <ItemModal
         selectedCard={selectedCard}
         isOpen={activeModal === "preview"}

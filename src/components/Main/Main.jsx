@@ -24,10 +24,12 @@ function Main({
         isDay={isDay}
       />
 
-      {/* Clothing section title */}
-      <p className="main__text">
-        Today is {temperature}°F — you may want to wear:
-      </p>
+      {/* Clothing section title (only show when temperature is ready) */}
+      {temperature !== null && (
+        <p className="main__text">
+          Today is {Math.round(temperature)}°F — you may want to wear:
+        </p>
+      )}
 
       {/* Clothing cards */}
       <ul className="main__cards">
