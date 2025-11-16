@@ -44,7 +44,7 @@ Weather API helpers: getCurrentWeather, parseWeatherData, getWeatherCondition.
 🚀 Live Demo (if deployed)
 
 Replace this link with your GitHub Pages / Netlify deployment
-https://your-username.github.io/wtwr/
+https://github.com/ZachMolzner/se_project_react.git
 
 🛠 Technologies Used
 Frontend

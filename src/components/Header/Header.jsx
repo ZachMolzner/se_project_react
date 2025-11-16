@@ -3,8 +3,13 @@ import "./Header.css";
 import avatar from "../../assets/avatar.svg";
 import logo from "../../assets/Logo.svg";
 
-function Header({ date, city, onAddClothesClick }) {
+function Header({ city, onAddClothesClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Compute current date here (per checklist)
+  const today = new Date();
+  const options = { month: "short", day: "numeric" };
+  const formattedDate = today.toLocaleDateString("en-US", options);
 
   function toggleMenu() {
     setIsMenuOpen((prev) => !prev);
@@ -20,12 +25,10 @@ function Header({ date, city, onAddClothesClick }) {
       <div className="header__main-row">
         <div className="header__left">
           <img src={logo} alt="WTWR logo" className="header__logo" />
-
           <p className="header__date-location">
-            {date}, {city || "Loading..."}
+            {formattedDate}, {city || "Loading..."}
           </p>
         </div>
-
         <div className="header__right">
           <button
             type="button"
@@ -38,7 +41,7 @@ function Header({ date, city, onAddClothesClick }) {
           <img src={avatar} className="header__avatar" alt="user avatar" />
         </div>
 
-        {/* HAMBURGER — visible only on phone via CSS */}
+        {/* HAMBURGER – visible only on mobile */}
         <button className="header__hamburger" onClick={toggleMenu}>
           <div className={`hamburger ${isMenuOpen ? "open" : ""}`}>
             <span></span>
@@ -55,11 +58,9 @@ function Header({ date, city, onAddClothesClick }) {
               type="button"
               className="header__mobile-close"
               onClick={toggleMenu}
-              aria-label="Close menu"
             >
               ×
             </button>
-
             <div className="header__mobile-user-row">
               <span className="header__mobile-name">Zach Molzner</span>
               <img
@@ -68,7 +69,6 @@ function Header({ date, city, onAddClothesClick }) {
                 className="header__mobile-avatar"
               />
             </div>
-
             <button
               type="button"
               className="header__mobile-add"
