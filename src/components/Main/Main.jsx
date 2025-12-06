@@ -20,6 +20,7 @@ function Main({ weatherData, clothingItems = [], onSelectCard }) {
   const displayTemp = weatherData.temperature[currentTemperatureUnit];
   const weatherType = weatherData.weatherType || "cold";
 
+  // Filter items based on weatherType
   const filteredItems = clothingItems.filter((item) => {
     if (!item.weather) return false;
     return item.weather.toLowerCase() === weatherType;
@@ -34,13 +35,12 @@ function Main({ weatherData, clothingItems = [], onSelectCard }) {
       </p>
 
       <ul className="main__cards">
-        {filteredItems.map((item) => (
-          <ItemCard
-            key={item.id || item._id}
-            card={item}
-            onCardClick={onSelectCard}
-          />
-        ))}
+        {filteredItems.map((item) => {
+          // Ensure stable + safe key
+          const key = item.id ?? item._id ?? `${item.name}-${item.imageUrl}`;
+
+          return <ItemCard key={key} card={item} onCardClick={onSelectCard} />;
+        })}
       </ul>
     </main>
   );

@@ -1,17 +1,19 @@
 // src/components/Header/Header.jsx
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
-import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
+import { useState } from "react";
 import avatarImage from "../../assets/avatar.svg";
+import logoImage from "../../assets/Logo.svg"; // FIX: Use correct import
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./Header.css";
 
 function Header({ city, onAddClothesClick }) {
   const navigate = useNavigate();
-  const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
-    CurrentTemperatureUnitContext
-  );
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // -------- DATE FORMATTING (FULL MONTH NAME) --------
+  const today = new Date();
+  const options = { month: "long", day: "numeric" };
+  const formattedDate = today.toLocaleDateString("en-US", options);
 
   function toggleMobileMenu() {
     setIsMobileMenuOpen((prev) => !prev);
@@ -25,27 +27,23 @@ function Header({ city, onAddClothesClick }) {
   return (
     <header className="header">
       <div className="header__main-row">
-        {/* LEFT — LOGO + LOCATION */}
+        {/* LEFT SECTION */}
         <div className="header__left">
-          {/* Clicking logo → home */}
           <Link to="/" className="header__logo-link">
-            <img
-              src="/se_project_react/logo.svg"
-              alt="WTWR Logo"
-              className="header__logo"
-            />
+            <img src={logoImage} alt="WTWR Logo" className="header__logo" />
           </Link>
 
-          <p className="header__date-location">{city || "Loading..."}</p>
+          <p className="header__date-location">
+            {formattedDate}, {city || "Loading..."}
+          </p>
         </div>
 
-        {/* RIGHT — DESKTOP */}
+        {/* RIGHT — DESKTOP ONLY */}
         <div className="header__right">
           <button className="header__add-clothes" onClick={onAddClothesClick}>
             + Add clothes
           </button>
 
-          {/* DESKTOP NAV LINK TO /PROFILE */}
           <Link to="/profile" className="header__user">
             <span className="header__username-button">Your profile</span>
             <img
@@ -55,18 +53,10 @@ function Header({ city, onAddClothesClick }) {
             />
           </Link>
 
-          {/* Temperature Toggle */}
-          <label className="toggle-switch">
-            <input
-              type="checkbox"
-              checked={currentTemperatureUnit === "C"}
-              onChange={handleToggleSwitchChange}
-            />
-            <span className="toggle-slider"></span>
-          </label>
+          <ToggleSwitch />
         </div>
 
-        {/* HAMBURGER BUTTON — MOBILE ONLY */}
+        {/* MOBILE HAMBURGER */}
         <button className="header__hamburger" onClick={toggleMobileMenu}>
           <span className="header__hamburger-line"></span>
           <span className="header__hamburger-line"></span>
@@ -84,33 +74,30 @@ function Header({ city, onAddClothesClick }) {
               ✕
             </button>
 
-            {/* MOBILE PROFILE LINK */}
+            {/* MOBILE PROFILE BUTTON */}
             <button className="header__mobile-user-row" onClick={goToProfile}>
-              <img src={avatarImage} className="header__mobile-avatar" />
+              <img
+                src={avatarImage}
+                alt="User"
+                className="header__mobile-avatar"
+              />
               <span className="header__mobile-name">Your profile</span>
             </button>
 
-            {/* Add clothes (mobile) */}
+            {/* MOBILE ADD CLOTHES */}
             <button
               className="header__mobile-add"
               onClick={() => {
-                onAddClothesClick();
                 toggleMobileMenu();
+                onAddClothesClick();
               }}
             >
               + Add clothes
             </button>
 
-            {/* Temperature Toggle */}
+            {/* MOBILE TOGGLE SWITCH */}
             <div className="header__mobile-toggle">
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={currentTemperatureUnit === "C"}
-                  onChange={handleToggleSwitchChange}
-                />
-                <span className="toggle-slider"></span>
-              </label>
+              <ToggleSwitch />
             </div>
           </div>
         </div>

@@ -1,6 +1,4 @@
-/* ============================
-   BASE HEADER WRAPPER
-============================ */
+/* ============= BASE HEADER WRAPPER ============= */
 
 .header {
   width: 100%;
@@ -15,9 +13,7 @@
   align-items: center;
 }
 
-/* ============================
-   LEFT SIDE (Logo + date/location)
-============================ */
+/* ---------- LEFT SIDE (Logo + date/location) ---------- */
 
 .header__left {
   display: flex;
@@ -25,15 +21,18 @@
   gap: 24px;
 }
 
+/* logo link should NOT look like a purple/underlined link */
+.header__logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
 .header__logo {
   width: 89px;
   height: 40px;
   object-fit: contain;
-}
-
-.header__logo-link {
-  display: inline-flex;
-  align-items: center;
 }
 
 .header__date-location {
@@ -45,44 +44,15 @@
   color: #000;
 }
 
-/* ============================
-   DESKTOP RIGHT SIDE
-============================ */
+/* ============= DESKTOP RIGHT SIDE CONTROLS ============= */
 
 .header__right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
-.header__username-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-
-  font-family: "CabinetGrotesk", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  color: #000;
-}
-
-.header__avatar-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.header__avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-/* ============================
-   ADD CLOTHES BUTTON
-============================ */
+/* Add clothes button */
 
 .header__add-clothes {
   background: transparent;
@@ -100,12 +70,46 @@
   text-decoration: underline;
 }
 
-/* ============================
-   HAMBURGER BUTTON (HIDDEN BY DEFAULT)
-============================ */
+/* Desktop username + avatar container (clickable area) */
+
+.header__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #000000;
+}
+
+/* if you used a Link around the username, kill default link styles */
+.header__username-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header__username-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000;
+}
+
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ============= HAMBURGER BUTTON (MOBILE ONLY) ============= */
 
 .header__hamburger {
-  display: none; /* Hidden on desktop */
+  /* hidden on desktop */
+  display: none;
   width: 44px;
   height: 44px;
   background: #ffffff;
@@ -117,11 +121,9 @@
   justify-content: center;
   align-items: center;
   gap: 6px;
-
   padding: 0;
 }
 
-/* hamburger lines */
 .header__hamburger-line {
   width: 22px;
   height: 3px;
@@ -129,9 +131,7 @@
   border-radius: 2px;
 }
 
-/* ============================
-   MOBILE DROPDOWN OVERLAY
-============================ */
+/* ============= MOBILE DROPDOWN OVERLAY ============= */
 
 .header__overlay {
   position: fixed;
@@ -166,7 +166,7 @@
 
   background: none;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
   cursor: pointer;
 }
 
@@ -183,17 +183,18 @@
   margin-bottom: 20px;
 }
 
-.header__mobile-name {
-  font-family: "CabinetGrotesk", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  color: #000;
-}
-
 .header__mobile-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+}
+
+.header__mobile-name {
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  color: #000000;
 }
 
 .header__mobile-add {
@@ -206,6 +207,8 @@
   font-family: "CabinetGrotesk", sans-serif;
   font-weight: 700;
   font-size: 20px;
+  line-height: 24px;
+  color: #000000;
 }
 
 .header__mobile-add:hover {
@@ -216,23 +219,11 @@
   margin-top: 20px;
 }
 
-/* ============================
-   MOBILE BREAKPOINT (≤ 430px)
-============================ */
+/* ============= MOBILE BREAKPOINT (≤ 430px) ============= */
 
 @media screen and (max-width: 430px) {
   .header {
     padding: 16px;
-  }
-
-  /* Hide desktop controls */
-  .header__right {
-    display: none;
-  }
-
-  /* SHOW hamburger ONLY on mobile */
-  .header__hamburger {
-    display: flex;
   }
 
   .header__left {
@@ -241,24 +232,16 @@
 
   .header__date-location {
     font-size: 18px;
-  }
-  .profile__header-row {
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Push items apart */
-    align-items: center;
-    margin-top: 8px;
-
-    gap: 0; /* Remove desktop spacing */
-  }
-
-  .profile__title {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .profile__add-button {
-    font-size: 18px;
     line-height: 22px;
+  }
+
+  /* hide desktop right controls */
+  .header__right {
+    display: none;
+  }
+
+  /* show hamburger only on mobile */
+  .header__hamburger {
+    display: flex;
   }
 }
