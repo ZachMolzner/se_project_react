@@ -1,139 +1,116 @@
 // src/components/Header/Header.jsx
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
+import avatarImage from "../../assets/avatar.svg";
 import "./Header.css";
 
-import logo from "../../assets/Logo.svg";
-import avatar from "../../assets/avatar.svg";
-import ToggleSwitch from "../../ToggleSwitch/ToggleSwitch.jsx";
-
 function Header({ city, onAddClothesClick }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
+    CurrentTemperatureUnitContext
+  );
 
-  // Date + city text
-  const today = new Date();
-  const options = { month: "short", day: "numeric" };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const locationText = city || "Loading...";
-  const dateLocationText = `${formattedDate}, ${locationText}`;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  function toggleMobileMenu() {
+    setIsMobileMenuOpen((prev) => !prev);
+  }
 
-  const handleOverlayClick = () => {
-    setIsMenuOpen(false);
-  };
-
-  const handleAddClothesFromMenu = () => {
-    setIsMenuOpen(false);
-    onAddClothesClick();
-  };
-
-  // DESKTOP: username click → profile
-  const handleDesktopProfileClick = () => {
+  function goToProfile() {
+    setIsMobileMenuOpen(false);
     navigate("/profile");
-  };
-
-  // MOBILE: username row click → profile + close menu
-  const handleMobileProfileClick = () => {
-    setIsMenuOpen(false);
-    navigate("/profile");
-  };
+  }
 
   return (
     <header className="header">
       <div className="header__main-row">
-        {/* LEFT: logo (clickable) + date/location */}
+        {/* LEFT — LOGO + LOCATION */}
         <div className="header__left">
+          {/* Clicking logo → home */}
           <Link to="/" className="header__logo-link">
-            <img src={logo} alt="WTWR logo" className="header__logo" />
+            <img
+              src="/se_project_react/logo.svg"
+              alt="WTWR Logo"
+              className="header__logo"
+            />
           </Link>
-          <p className="header__date-location">{dateLocationText}</p>
+
+          <p className="header__date-location">{city || "Loading..."}</p>
         </div>
 
-        {/* RIGHT: desktop controls */}
+        {/* RIGHT — DESKTOP */}
         <div className="header__right">
-          <ToggleSwitch />
-
-          <button
-            type="button"
-            className="header__add-clothes"
-            onClick={onAddClothesClick}
-          >
+          <button className="header__add-clothes" onClick={onAddClothesClick}>
             + Add clothes
           </button>
 
-          <button
-            type="button"
-            className="header__username-button"
-            onClick={handleDesktopProfileClick}
-          >
-            Zach Molzner
-          </button>
+          {/* DESKTOP NAV LINK TO /PROFILE */}
+          <Link to="/profile" className="header__user">
+            <span className="header__username-button">Your profile</span>
+            <img
+              src={avatarImage}
+              alt="User avatar"
+              className="header__avatar"
+            />
+          </Link>
 
-          <button
-            type="button"
-            className="header__avatar-button"
-            onClick={handleDesktopProfileClick}
-          >
-            <img src={avatar} alt="User avatar" className="header__avatar" />
-          </button>
+          {/* Temperature Toggle */}
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={currentTemperatureUnit === "C"}
+              onChange={handleToggleSwitchChange}
+            />
+            <span className="toggle-slider"></span>
+          </label>
         </div>
 
-        {/* HAMBURGER – visible only at mobile via CSS */}
-        <button
-          type="button"
-          className="header__hamburger"
-          onClick={toggleMobileMenu}
-          aria-label="Open menu"
-        >
-          <span className="header__hamburger-line" />
-          <span className="header__hamburger-line" />
+        {/* HAMBURGER BUTTON — MOBILE ONLY */}
+        <button className="header__hamburger" onClick={toggleMobileMenu}>
+          <span className="header__hamburger-line"></span>
+          <span className="header__hamburger-line"></span>
         </button>
       </div>
 
-      {/* MOBILE OVERLAY MENU */}
-      {isMenuOpen && (
-        <div className="header__overlay" onClick={handleOverlayClick}>
+      {/* MOBILE DROPDOWN MENU */}
+      {isMobileMenuOpen && (
+        <div className="header__overlay" onClick={toggleMobileMenu}>
           <div
             className="header__mobile-card"
-            onClick={(e) => e.stopPropagation()} // keep clicks inside from closing
+            onClick={(e) => e.stopPropagation()}
           >
-            <button
-              type="button"
-              className="header__mobile-close"
-              onClick={toggleMobileMenu}
-              aria-label="Close menu"
-            >
-              ×
+            <button className="header__mobile-close" onClick={toggleMobileMenu}>
+              ✕
             </button>
 
-            {/* USER ROW – this is the thing you tap to go to profile */}
-            <button
-              type="button"
-              className="header__mobile-user-row"
-              onClick={handleMobileProfileClick}
-            >
-              <span className="header__mobile-name">Zach Molzner</span>
-              <img
-                src={avatar}
-                alt="User avatar"
-                className="header__mobile-avatar"
-              />
+            {/* MOBILE PROFILE LINK */}
+            <button className="header__mobile-user-row" onClick={goToProfile}>
+              <img src={avatarImage} className="header__mobile-avatar" />
+              <span className="header__mobile-name">Your profile</span>
             </button>
 
+            {/* Add clothes (mobile) */}
             <button
-              type="button"
               className="header__mobile-add"
-              onClick={handleAddClothesFromMenu}
+              onClick={() => {
+                onAddClothesClick();
+                toggleMobileMenu();
+              }}
             >
               + Add clothes
             </button>
 
+            {/* Temperature Toggle */}
             <div className="header__mobile-toggle">
-              <ToggleSwitch />
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={currentTemperatureUnit === "C"}
+                  onChange={handleToggleSwitchChange}
+                />
+                <span className="toggle-slider"></span>
+              </label>
             </div>
           </div>
         </div>
