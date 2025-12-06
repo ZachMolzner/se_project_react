@@ -1,3 +1,4 @@
+// src/components/ItemCard/ItemCard.jsx
 import "./ItemCard.css";
 
 function ItemCard({ card, onCardClick }) {
@@ -10,13 +11,10 @@ function ItemCard({ card, onCardClick }) {
       <p className="card__title">{card.name}</p>
 
       <img
-        src={card.imageUrl} // ✔ FIXED from "link" → "imageUrl"
+        src={card.imageUrl || card.link}
         alt={card.name}
         className="card__image"
       />
-
-      {/* Optional: visible weather label depending on your Figma */}
-      {/* <p className="card__weather">{card.weather}</p> */}
     </li>
   );
 }

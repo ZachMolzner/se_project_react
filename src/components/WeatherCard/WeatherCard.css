@@ -1,3 +1,5 @@
+/* =============== Weather Card Base =============== */
+
 .weather-card {
   width: 100%;
   height: 80px;
@@ -16,11 +18,13 @@
   position: relative;
 }
 
+/* Temperature text */
 .weather-card__temp {
   margin: 0;
-  font-family: Cabinet Grotesk;
+
+  font-family: "CabinetGrotesk", sans-serif;
   font-weight: 700;
-  font-style: Bold;
+  font-style: normal;
   font-size: 36px;
   line-height: 40px;
   letter-spacing: 0%;
@@ -28,19 +32,26 @@
 
   color: #ffffff;
   text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.35);
+
   position: relative;
   z-index: 2;
 }
 
+/* Dark overlay on background */
 .weather-card::after {
   content: "";
   position: absolute;
   inset: 0;
+
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 16px;
+
   z-index: 1;
 }
 
+/* ==================== Weather Themes ==================== */
+
+/* Day */
 .weather-card_theme_day-clear {
   background-image: url("../../assets/weather/day-clear.png");
 }
@@ -57,6 +68,7 @@
   background-image: url("../../assets/weather/day-fog.png");
 }
 
+/* Night */
 .weather-card_theme_night-clear {
   background-image: url("../../assets/weather/night-clear.png");
 }
@@ -73,14 +85,12 @@
   background-image: url("../../assets/weather/night-fog.png");
 }
 
+/* ==================== Mobile ==================== */
+
 @media screen and (max-width: 600px) {
   .weather-card {
     height: 72px;
     padding: 0 16px;
-
-    background-size: cover;
-    background-position: right center;
-    background-repeat: no-repeat;
   }
 
   .weather-card__temp {

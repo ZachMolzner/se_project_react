@@ -36,7 +36,6 @@ function Main({ weatherData, clothingItems = [], onSelectCard }) {
 
       <ul className="main__cards">
         {filteredItems.map((item) => {
-          // Ensure stable + safe key
           const key = item.id ?? item._id ?? `${item.name}-${item.imageUrl}`;
 
           return <ItemCard key={key} card={item} onCardClick={onSelectCard} />;

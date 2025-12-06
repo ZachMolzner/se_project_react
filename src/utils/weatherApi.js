@@ -1,4 +1,5 @@
 import { API_KEY, COORDINATES } from "./constants.js";
+import { checkResponse } from "./api.js";
 
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -7,32 +8,29 @@ export function getCurrentWeather() {
 
   const url = `${baseUrl}?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`;
 
-  return fetch(url).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Weather API error: ${res.status}`);
-    }
-    return res.json();
-  });
+  return fetch(url).then(checkResponse);
 }
 
-// Now we also grab condition, sunrise, sunset, and currentTime
+// Convert raw OpenWeather data into the structure our app expects
 export function parseWeatherData(data) {
   return {
     temperature: Math.round(data.main.temp),
     city: data.name,
-    condition: data.weather?.[0]?.main || "Clear", // e.g. "Clear", "Clouds", "Rain"
-    sunrise: data.sys.sunrise, // seconds since 1970
-    sunset: data.sys.sunset, // seconds since 1970
-    currentTime: data.dt, // seconds since 1970
+    condition: data.weather?.[0]?.main || "Clear",
+
+    // timestamps (seconds since 1970)
+    sunrise: data.sys.sunrise,
+    sunset: data.sys.sunset,
+    currentTime: data.dt,
   };
 }
 
+// Map temperature → hot/warm/cold
 export function getWeatherCondition(temp) {
   if (temp >= 86) {
     return "hot";
   } else if (temp >= 66) {
     return "warm";
-  } else {
-    return "cold";
   }
+  return "cold";
 }
