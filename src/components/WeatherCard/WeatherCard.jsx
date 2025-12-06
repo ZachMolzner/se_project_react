@@ -1,10 +1,22 @@
+import { useContext } from "react";
 import "./WeatherCard.css";
+import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 
-function WeatherCard({ temperature, condition, isDay }) {
-  // Normalize the condition text from the API
+function WeatherCard({ weatherData }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  // No weather data yet -> don't render anything
+  if (!weatherData) return null;
+
+  const { temperature, condition, isDay } = weatherData;
+
+  // Get correct temperature unit
+  const temp = temperature[currentTemperatureUnit];
+
+  // Normalize condition text
   const normalizedCondition = (condition || "").toLowerCase();
 
-  // Determine variant (WTWR supports: clear, cloudy, rain, snow, fog)
+  // Determine background variant
   let variant = "clear";
 
   if (normalizedCondition.includes("cloud")) {
@@ -25,13 +37,13 @@ function WeatherCard({ temperature, condition, isDay }) {
     variant = "fog";
   }
 
-  // Builds class like: weather-card_theme_day-rain
+  // Build final classname (matches Figma)
   const themeClass = `weather-card_theme_${isDay ? "day" : "night"}-${variant}`;
 
   return (
     <section className={`weather-card ${themeClass}`}>
       <p className="weather-card__temp">
-        {temperature !== null ? `${Math.round(temperature)}°F` : "--°F"}
+        {temp}°{currentTemperatureUnit}
       </p>
     </section>
   );

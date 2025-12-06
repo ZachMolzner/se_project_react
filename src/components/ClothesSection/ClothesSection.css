@@ -1,0 +1,31 @@
+/* src/components/ClothesSection/ClothesSection.css */
+
+.clothes {
+  margin-top: 24px;
+}
+
+/* DESKTOP: 3 cards per row */
+.clothes__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* TABLET / SMALLER: 2 cards per row */
+@media screen and (max-width: 900px) {
+  .clothes__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* MOBILE ≤ 430px: still 2 cards per row (Figma) */
+@media screen and (max-width: 430px) {
+  .clothes__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px; /* a bit tighter spacing on phones */
+  }
+}

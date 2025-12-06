@@ -55,19 +55,26 @@
 }
 
 .item-modal__info {
-  padding: 16px 20px;
+  padding: 16px 20px 20px;
   background: #ffffff;
-  flex-grow: 1;
+  text-align: left;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+}
 
-  text-align: left;
+/* Row with name + delete button */
+.item-modal__info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 6px;
 }
 
 .item-modal__name {
-  margin: 0 0 6px 0;
+  margin: 0;
   font-size: 20px;
   font-weight: 600;
 }
@@ -77,6 +84,25 @@
   font-size: 16px;
   font-weight: 500;
   color: #555;
+}
+
+.item-modal__delete {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #ff4d00;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.item-modal__delete:hover {
+  opacity: 0.7;
+}
+
+.item-modal__delete:active {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 430px) {

@@ -1,35 +1,62 @@
+// src/components/Header/Header.jsx
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
-import avatar from "../../assets/avatar.svg";
+
 import logo from "../../assets/Logo.svg";
+import avatar from "../../assets/avatar.svg";
+import ToggleSwitch from "../../ToggleSwitch/ToggleSwitch.jsx";
 
 function Header({ city, onAddClothesClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Compute current date here (per checklist)
+  // Date + city text
   const today = new Date();
   const options = { month: "short", day: "numeric" };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const locationText = city || "Loading...";
+  const dateLocationText = `${formattedDate}, ${locationText}`;
 
-  function toggleMenu() {
+  const toggleMobileMenu = () => {
     setIsMenuOpen((prev) => !prev);
-  }
+  };
 
-  function handleAddFromMenu() {
-    toggleMenu();
+  const handleOverlayClick = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleAddClothesFromMenu = () => {
+    setIsMenuOpen(false);
     onAddClothesClick();
-  }
+  };
+
+  // DESKTOP: username click → profile
+  const handleDesktopProfileClick = () => {
+    navigate("/profile");
+  };
+
+  // MOBILE: username row click → profile + close menu
+  const handleMobileProfileClick = () => {
+    setIsMenuOpen(false);
+    navigate("/profile");
+  };
 
   return (
     <header className="header">
       <div className="header__main-row">
+        {/* LEFT: logo (clickable) + date/location */}
         <div className="header__left">
-          <img src={logo} alt="WTWR logo" className="header__logo" />
-          <p className="header__date-location">
-            {formattedDate}, {city || "Loading..."}
-          </p>
+          <Link to="/" className="header__logo-link">
+            <img src={logo} alt="WTWR logo" className="header__logo" />
+          </Link>
+          <p className="header__date-location">{dateLocationText}</p>
         </div>
+
+        {/* RIGHT: desktop controls */}
         <div className="header__right">
+          <ToggleSwitch />
+
           <button
             type="button"
             className="header__add-clothes"
@@ -37,45 +64,77 @@ function Header({ city, onAddClothesClick }) {
           >
             + Add clothes
           </button>
-          <span className="header__username">Zach Molzner</span>
-          <img src={avatar} className="header__avatar" alt="user avatar" />
+
+          <button
+            type="button"
+            className="header__username-button"
+            onClick={handleDesktopProfileClick}
+          >
+            Zach Molzner
+          </button>
+
+          <button
+            type="button"
+            className="header__avatar-button"
+            onClick={handleDesktopProfileClick}
+          >
+            <img src={avatar} alt="User avatar" className="header__avatar" />
+          </button>
         </div>
 
-        {/* HAMBURGER – visible only on mobile */}
-        <button className="header__hamburger" onClick={toggleMenu}>
-          <div className={`hamburger ${isMenuOpen ? "open" : ""}`}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+        {/* HAMBURGER – visible only at mobile via CSS */}
+        <button
+          type="button"
+          className="header__hamburger"
+          onClick={toggleMobileMenu}
+          aria-label="Open menu"
+        >
+          <span className="header__hamburger-line" />
+          <span className="header__hamburger-line" />
         </button>
       </div>
 
+      {/* MOBILE OVERLAY MENU */}
       {isMenuOpen && (
-        <div className="header__overlay">
-          <div className="header__mobile-card">
+        <div className="header__overlay" onClick={handleOverlayClick}>
+          <div
+            className="header__mobile-card"
+            onClick={(e) => e.stopPropagation()} // keep clicks inside from closing
+          >
             <button
               type="button"
               className="header__mobile-close"
-              onClick={toggleMenu}
+              onClick={toggleMobileMenu}
+              aria-label="Close menu"
             >
               ×
             </button>
-            <div className="header__mobile-user-row">
+
+            {/* USER ROW – this is the thing you tap to go to profile */}
+            <button
+              type="button"
+              className="header__mobile-user-row"
+              onClick={handleMobileProfileClick}
+            >
               <span className="header__mobile-name">Zach Molzner</span>
               <img
                 src={avatar}
-                alt="user avatar"
+                alt="User avatar"
                 className="header__mobile-avatar"
               />
-            </div>
+            </button>
+
             <button
               type="button"
               className="header__mobile-add"
-              onClick={handleAddFromMenu}
+              onClick={handleAddClothesFromMenu}
             >
               + Add clothes
             </button>
+
+            <div className="header__mobile-toggle">
+              <ToggleSwitch />
+            </div>
           </div>
         </div>
       )}

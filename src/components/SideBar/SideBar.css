@@ -1,0 +1,86 @@
+/* ============================================
+   SIDEBAR — DESKTOP DEFAULT
+   ============================================ */
+
+.sidebar {
+  display: flex;
+  flex-direction: row; /* ← side-by-side for desktop */
+  align-items: center;
+  gap: 16px;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+/* Avatar */
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Username */
+.sidebar__name {
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
+}
+
+/* Hide mobile links on desktop */
+.sidebar__link {
+  display: none;
+}
+
+/* ============================================
+   MOBILE MODE — ≤ 430px
+   (unchanged — still matches Figma EXACTLY)
+   ============================================ */
+
+@media screen and (max-width: 430px) {
+  .sidebar {
+    width: 343px;
+    height: 100px;
+
+    margin: 16px auto 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+    border-top: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+  }
+
+  .sidebar__avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  .sidebar__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .sidebar__name {
+    font-family: "Cabinet Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    margin: 0 0 6px 0;
+  }
+
+  .sidebar__link {
+    display: block;
+    font-family: "Cabinet Grotesk", sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: #00000099;
+    margin: 0;
+  }
+}

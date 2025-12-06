@@ -1,0 +1,94 @@
+.toggle {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+/* hide the real checkbox */
+.toggle__checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- PILL (56×28) --- */
+.toggle__slider {
+  position: relative;
+  display: inline-block; /* now on a <div>, not fighting span styles */
+  width: 56px;
+  height: 28px;
+  border-radius: 14px;
+
+  background-color: #ffffff;
+  border: 2px solid #9b9b9b;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* F / C labels inside the track */
+.toggle__labels {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  z-index: 1;
+}
+
+.toggle__label {
+  font-family: "CabinetGrotesk", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* --- BLACK CIRCLE (28×28) --- */
+.toggle__thumb {
+  position: absolute;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #000000;
+
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2;
+  transition: left 0.2s ease;
+}
+
+.toggle__thumb-text {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* --- STATES --- */
+
+/* F active: circle on left */
+.toggle__slider_f .toggle__thumb {
+  left: 0;
+}
+
+/* C active: circle on right (56 - 28) */
+.toggle__slider_c .toggle__thumb {
+  left: 28px;
+}
+
+/* inactive letter grey; active one hidden behind circle text */
+.toggle__slider_f .toggle__label_f {
+  color: transparent; /* F is inside knob */
+}
+.toggle__slider_f .toggle__label_c {
+  color: #9b9b9b;
+}
+
+.toggle__slider_c .toggle__label_c {
+  color: transparent; /* C is inside knob */
+}
+.toggle__slider_c .toggle__label_f {
+  color: #9b9b9b;
+}

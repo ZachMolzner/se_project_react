@@ -1,49 +1,65 @@
 🧥 WTWR – What To Wear Right Now
 
-A weather-based clothing recommendation app built with React + Vite.
-
-WTWR shows the current weather for the user’s location and recommends clothing items based on temperature. Users can add their own clothing items, preview them in a modal, and browse items filtered by weather type (hot, warm, cold). The app dynamically updates between day/night themes, uses live weather API data, and is fully responsive across desktop, tablet, and mobile.
+A responsive, weather-based clothing recommendation app built with React + Vite.
+WTWR displays the user’s local weather conditions and recommends appropriate clothing items based on temperature. Users can add their own items, preview them in a modal, and browse items filtered by weather type (“hot,” “warm,” or “cold”).
+The interface updates dynamically between day and night and adapts smoothly across desktop, tablet, and mobile layouts.
 
 ⭐ Features
-🌤 Real-time Weather Display
+🌤 Real-Time Weather Display
 
-Fetches real weather data from an API.
+Fetches live data from a weather API
 
-Detects temperature, weather condition, city, and day/night.
+Detects temperature, weather condition, city, and day/night cycle
 
-Parses weather into "hot", "warm", or "cold" categories.
+Parses raw weather into simplified categories: hot, warm, cold
 
-👕 Clothing Recommendations
+👕 Dynamic Clothing Recommendations
 
-Shows matching clothing items based on weather type.
+Displays user-added clothing that matches the weather
 
-Items can be previewed in a modal with a full-size image.
+Items open in a full-size modal preview
+
+Clothing grid is organized by type for easy browsing
 
 ➕ Add New Garments
 
-Users can add new clothing items via a form modal.
+Modal form allows users to upload and name clothing items
 
-New items appear instantly in the clothing grid.
+Items render instantly on the main grid
 
-🌓 Day/Night Themes
+🌓 Automatic Day/Night Theme
 
-UI updates based on sunrise/sunset times.
+UI theme adjusts based on sunrise and sunset
 
-📱 Fully Responsive
+Weather card, header, and background adapt to time of day
 
-Custom layouts for desktop, tablet, and mobile.
+📱 Fully Responsive UI
 
-Hamburger menu + mobile header card for small screens.
+Custom layouts for desktop, tablet, and mobile
 
-🔒 Clean Architecture
+Includes hamburger menu + compact mobile header card
 
-Component-based structure (Header, Main, Footer, Modals, Cards).
+Scales smoothly down to 375px mobile width
 
-Weather API helpers: getCurrentWeather, parseWeatherData, getWeatherCondition.
+🔒 Clean, Scalable Architecture
 
-🚀 Live Demo (if deployed)
+Modular React components (Header, Main, Footer, Cards, Modals)
 
-Replace this link with your GitHub Pages / Netlify deployment
+Weather utility functions:
+
+getCurrentWeather
+
+parseWeatherData
+
+getWeatherCondition
+
+CSS organized using BEM methodology
+
+🚀 Live Demo
+
+(Replace this with your deployed link once ready)
+
+GitHub Repository:
 https://github.com/ZachMolzner/se_project_react.git
 
 🛠 Technologies Used
@@ -55,9 +71,9 @@ Vite
 
 JavaScript (ES6+)
 
-CSS (BEM methodology)
+CSS (BEM)
 
-Responsive design / media queries
+Responsive Media Queries
 
 Tools & Libraries
 
@@ -71,6 +87,46 @@ Fetch API
 
 APIs
 
-Custom weather API utilities
+Custom weather utility functions
 
-OpenWeatherMap (or your chosen weather API source)
+OpenWeatherMap (or chosen weather provider)
+
+🧪 Installation & Setup
+
+1. Clone the repository
+   git clone https://github.com/ZachMolzner/se_project_react.git
+   cd se_project_react
+
+2. Install dependencies
+   npm install
+
+3. Run the development server
+   npm run dev
+
+4. Build for production
+   npm run build
+
+🔧 Environment Variables (Weather API)
+
+Create a .env file:
+
+VITE_WEATHER_API_KEY=your_api_key_here
+VITE_WEATHER_BASE_URL=https://api.openweathermap.org/data/2.5/
+
+📌 Future Improvements
+
+User authentication
+
+“Favorite” clothing items
+
+Edit/delete clothing items
+
+Multi-language support
+
+Dark mode override setting
+
+👤 Author
+
+Zach Molzner
+Software Engineer Trainee – TripleTen
+GitHub: https://github.com/ZachMolzner

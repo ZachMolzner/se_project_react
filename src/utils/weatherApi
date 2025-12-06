@@ -1,0 +1,34 @@
+// src/utils/weatherApi.js
+import { API_KEY, COORDINATES } from "./constants";
+
+const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+
+export const getCurrentWeather = () => {
+  const { latitude, longitude } = COORDINATES;
+  const url = `${BASE_URL}?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=imperial`;
+
+  return fetch(url).then((res) => {
+    if (!res.ok) {
+      return Promise.reject(`Error: ${res.status}`);
+    }
+    return res.json();
+  });
+};
+
+export const parseWeatherData = (data) => {
+  const temperature = Math.round(data.main.temp); // °F because we requested units=imperial
+  const city = data.name;
+  const condition = data.weather[0].main; // e.g., "Clear", "Clouds", "Rain"
+
+  const sunrise = data.sys.sunrise;
+  const sunset = data.sys.sunset;
+  const currentTime = data.dt;
+
+  return { temperature, city, condition, sunrise, sunset, currentTime };
+};
+
+export const getWeatherCondition = (temperatureF) => {
+  if (temperatureF >= 86) return "hot";
+  if (temperatureF >= 66) return "warm";
+  return "cold";
+};

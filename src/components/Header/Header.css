@@ -1,25 +1,39 @@
+/* ============================
+   BASE HEADER WRAPPER
+============================ */
+
 .header {
   width: 100%;
   padding: 20px 32px;
   background: #f3f3f3;
+  box-sizing: border-box;
 }
 
 .header__main-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 }
+
+/* ============================
+   LEFT SIDE (Logo + date/location)
+============================ */
 
 .header__left {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
 }
 
 .header__logo {
   width: 89px;
   height: 40px;
+  object-fit: contain;
+}
+
+.header__logo-link {
+  display: inline-flex;
+  align-items: center;
 }
 
 .header__date-location {
@@ -27,17 +41,13 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  letter-spacing: 0%;
-  padding-top: 0;
+  margin: 0;
+  color: #000;
 }
 
-.header__username {
-  font-family: "CabinetGrotesk", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 100%;
-  letter-spacing: 0%;
-}
+/* ============================
+   DESKTOP RIGHT SIDE
+============================ */
 
 .header__right {
   display: flex;
@@ -45,98 +55,89 @@
   gap: 20px;
 }
 
-.header__hamburger {
-  display: none;
+.header__username-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000;
 }
+
+.header__avatar-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* ============================
+   ADD CLOTHES BUTTON
+============================ */
 
 .header__add-clothes {
   background: transparent;
   border: none;
   padding: 0;
+  cursor: pointer;
 
   font-family: "CabinetGrotesk", sans-serif;
   font-weight: 700;
   font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0%;
-
-  color: #000000;
-  cursor: pointer;
+  color: #000;
 }
 
 .header__add-clothes:hover {
   text-decoration: underline;
 }
 
-@media screen and (max-width: 430px) {
-  .header {
-    padding: 32px 16px 16px;
-  }
+/* ============================
+   HAMBURGER BUTTON (HIDDEN BY DEFAULT)
+============================ */
 
-  .header__main-row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
+.header__hamburger {
+  display: none; /* Hidden on desktop */
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
 
-  .header__logo {
-    width: 89px;
-    height: 40px;
-    margin: 0;
-    padding: 0;
-    object-fit: contain;
-  }
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
 
-  .header__left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-  }
-
-  .header__date-location {
-    margin-top: 32px;
-    text-align: left;
-    width: auto;
-  }
-
-  .header__hamburger {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: #ffffff;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-
-    align-self: flex-start;
-    margin-top: -4px;
-  }
-
-  .header__hamburger span {
-    display: block;
-    width: 20px;
-    height: 3px;
-    background: #000;
-    margin: 3px 0;
-  }
-
-  .header__right {
-    display: none;
-  }
+  padding: 0;
 }
+
+/* hamburger lines */
+.header__hamburger-line {
+  width: 22px;
+  height: 3px;
+  background: #000;
+  border-radius: 2px;
+}
+
+/* ============================
+   MOBILE DROPDOWN OVERLAY
+============================ */
 
 .header__overlay {
   position: fixed;
   inset: 0;
-  background: transparent;
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 2000;
 
   display: flex;
   justify-content: center;
@@ -144,21 +145,17 @@
 }
 
 .header__mobile-card {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-
+  margin-top: 16px;
   width: 343px;
-  height: 208px;
-
   background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+  position: relative;
+  padding: 32px 16px;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -167,26 +164,30 @@
   top: 12px;
   right: 12px;
 
-  width: 21px;
-  height: 21px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: transparent;
+  background: none;
   border: none;
-  font-size: 21px;
-  line-height: 1;
+  font-size: 28px;
   cursor: pointer;
 }
 
 .header__mobile-user-row {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  margin-bottom: 16px;
+
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  margin-bottom: 20px;
+}
+
+.header__mobile-name {
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000;
 }
 
 .header__mobile-avatar {
@@ -196,30 +197,68 @@
 }
 
 .header__mobile-add {
-  background: transparent;
-  border: none;
-  padding: 0;
-
-  font-family: "CabinetGrotesk", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0%;
-
-  color: #000000;
-  cursor: pointer;
   margin-top: 16px;
-  text-align: center;
-}
 
-.header__mobile-name {
+  background: none;
+  border: none;
+  cursor: pointer;
+
   font-family: "CabinetGrotesk", sans-serif;
   font-weight: 700;
   font-size: 20px;
-  line-height: 100%;
-  letter-spacing: 0%;
 }
 
 .header__mobile-add:hover {
   text-decoration: underline;
+}
+
+.header__mobile-toggle {
+  margin-top: 20px;
+}
+
+/* ============================
+   MOBILE BREAKPOINT (≤ 430px)
+============================ */
+
+@media screen and (max-width: 430px) {
+  .header {
+    padding: 16px;
+  }
+
+  /* Hide desktop controls */
+  .header__right {
+    display: none;
+  }
+
+  /* SHOW hamburger ONLY on mobile */
+  .header__hamburger {
+    display: flex;
+  }
+
+  .header__left {
+    gap: 12px;
+  }
+
+  .header__date-location {
+    font-size: 18px;
+  }
+  .profile__header-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Push items apart */
+    align-items: center;
+    margin-top: 8px;
+
+    gap: 0; /* Remove desktop spacing */
+  }
+
+  .profile__title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .profile__add-button {
+    font-size: 18px;
+    line-height: 22px;
+  }
 }

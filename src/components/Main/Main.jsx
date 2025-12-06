@@ -1,40 +1,45 @@
+// src/components/Main/Main.jsx
 import "./Main.css";
+import { useContext } from "react";
+
 import WeatherCard from "../WeatherCard/WeatherCard.jsx";
 import ItemCard from "../ItemCard/ItemCard.jsx";
+import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 
-function Main({
-  temperature,
-  condition,
-  isDay,
-  weatherType,
-  cards,
-  onCardClick,
-}) {
-  // Filter clothing by weather type
-  const filteredCards = cards.filter((item) => {
+function Main({ weatherData, clothingItems = [], onSelectCard }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  if (!weatherData) {
+    return (
+      <main className="main">
+        <p className="main__text">Loading weather...</p>
+      </main>
+    );
+  }
+
+  const displayTemp = weatherData.temperature[currentTemperatureUnit];
+  const weatherType = weatherData.weatherType || "cold";
+
+  const filteredItems = clothingItems.filter((item) => {
+    if (!item.weather) return false;
     return item.weather.toLowerCase() === weatherType;
   });
 
   return (
     <main className="main">
-      {/* Weather banner */}
-      <WeatherCard
-        temperature={temperature}
-        condition={condition}
-        isDay={isDay}
-      />
+      <WeatherCard weatherData={weatherData} />
 
-      {/* Clothing section title (only show when temperature is ready) */}
-      {temperature !== null && (
-        <p className="main__text">
-          Today is {Math.round(temperature)}°F — you may want to wear:
-        </p>
-      )}
+      <p className="main__text">
+        Today is {displayTemp}°{currentTemperatureUnit} — you may want to wear:
+      </p>
 
-      {/* Clothing cards */}
       <ul className="main__cards">
-        {filteredCards.map((item) => (
-          <ItemCard key={item._id} card={item} onCardClick={onCardClick} />
+        {filteredItems.map((item) => (
+          <ItemCard
+            key={item.id || item._id}
+            card={item}
+            onCardClick={onSelectCard}
+          />
         ))}
       </ul>
     </main>
