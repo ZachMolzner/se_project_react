@@ -2,7 +2,7 @@
 
 const BASE_URL = "http://localhost:3001";
 
-const checkResponse = (res) => {
+export const checkResponse = (res) => {
   if (!res.ok) {
     return Promise.reject(`Error: ${res.status}`);
   }

@@ -5,14 +5,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 
 const AddItemModal = ({ isOpen, onClose, onAddItem }) => {
-  // ✅ use the real API from your hook
   const { values, handleChange, resetForm } = useForm({
     name: "",
     imageUrl: "",
     weather: "hot",
   });
 
-  // ✅ When the modal opens, reset the form to defaults
   useEffect(() => {
     if (isOpen) {
       resetForm({
@@ -21,7 +19,7 @@ const AddItemModal = ({ isOpen, onClose, onAddItem }) => {
         weather: "hot",
       });
     }
-  }, [isOpen, resetForm]);
+  }, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,11 +30,7 @@ const AddItemModal = ({ isOpen, onClose, onAddItem }) => {
       weather: values.weather,
     };
 
-    // Let App handle API + closing the modal
     onAddItem(newItem);
-
-    // Optional: if you ALSO want to clear immediately on submit:
-    // resetForm({ name: "", imageUrl: "", weather: "hot" });
   };
 
   return (

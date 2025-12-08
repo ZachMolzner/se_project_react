@@ -137,6 +137,19 @@ function App() {
       })
       .catch((err) => console.error("Delete error:", err));
   }
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === "Escape") {
+        closeAllModals();
+      }
+    };
+
+    document.addEventListener("keydown", closeByEscape);
+
+    return () => {
+      document.removeEventListener("keydown", closeByEscape);
+    };
+  }, []);
 
   return (
     <CurrentTemperatureUnitContext.Provider
