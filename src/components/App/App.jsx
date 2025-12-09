@@ -80,6 +80,15 @@ function App() {
     setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
   }
 
+  // ---------- UNIVERSAL MODAL CLOSER ----------
+  function closeAllModals() {
+    setIsItemModalOpen(false);
+    setIsAddItemModalOpen(false);
+    setIsConfirmModalOpen(false);
+    setSelectedCard(null);
+    setItemPendingDelete(null);
+  }
+
   // ---------- CARD / ITEM MODAL ----------
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -87,8 +96,7 @@ function App() {
   }
 
   function handleItemModalClose() {
-    setIsItemModalOpen(false);
-    setSelectedCard(null);
+    closeAllModals();
   }
 
   // ---------- ADD ITEM ----------
@@ -97,7 +105,7 @@ function App() {
   }
 
   function closeAddItemModal() {
-    setIsAddItemModalOpen(false);
+    closeAllModals();
   }
 
   // called from AddItemModal via onAddItem({ name, weather, imageUrl })
@@ -105,7 +113,7 @@ function App() {
     addItem({ name, weather, imageUrl })
       .then((newItem) => {
         setClothingItems((prev) => [newItem, ...prev]);
-        closeAddItemModal();
+        closeAllModals();
       })
       .catch((err) => console.error("Add item error:", err));
   }
@@ -117,8 +125,7 @@ function App() {
   }
 
   function handleCloseConfirmDelete() {
-    setIsConfirmModalOpen(false);
-    setItemPendingDelete(null);
+    closeAllModals();
   }
 
   function handleConfirmDelete() {
@@ -132,11 +139,12 @@ function App() {
         setClothingItems((prev) =>
           prev.filter((item) => item.id !== id && item._id !== id)
         );
-        handleCloseConfirmDelete();
-        handleItemModalClose();
+        closeAllModals();
       })
       .catch((err) => console.error("Delete error:", err));
   }
+
+  // ---------- ESCAPE KEY HANDLER ----------
   useEffect(() => {
     const closeByEscape = (e) => {
       if (e.key === "Escape") {
@@ -162,7 +170,6 @@ function App() {
               city={weatherData?.city}
               onAddClothesClick={openAddItemModal}
             />
-
             <Routes>
               <Route
                 path="/"
@@ -174,7 +181,6 @@ function App() {
                   />
                 }
               />
-
               <Route
                 path="/profile"
                 element={
@@ -186,7 +192,6 @@ function App() {
                 }
               />
             </Routes>
-
             <Footer />
           </div>
         </div>
