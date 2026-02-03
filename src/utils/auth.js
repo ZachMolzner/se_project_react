@@ -1,10 +1,9 @@
 const baseUrl = "http://localhost:3001";
 
-const checkResponse = (res) => {
-  if (res.ok) return res.json();
-  return res.json().then((err) => Promise.reject(err));
-};
+//  Import shared response handler
+import { checkResponse } from "./api.js";
 
+// Register user
 export const register = ({ name, avatar, email, password }) => {
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
@@ -13,6 +12,7 @@ export const register = ({ name, avatar, email, password }) => {
   }).then(checkResponse);
 };
 
+// Login user
 export const authorize = ({ email, password }) => {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
@@ -21,6 +21,7 @@ export const authorize = ({ email, password }) => {
   }).then(checkResponse);
 };
 
+// Validate token
 export const checkToken = (token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "GET",

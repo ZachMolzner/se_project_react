@@ -3,6 +3,7 @@ import { checkResponse } from "./api.js";
 
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
+// Fetch current weather data
 export function getCurrentWeather() {
   const { latitude, longitude } = COORDINATES;
 
@@ -25,7 +26,7 @@ export function parseWeatherData(data) {
   };
 }
 
-// Map temperature → hot/warm/cold
+// Map temperature → hot / warm / cold
 export function getWeatherCondition(temp) {
   if (temp >= 86) {
     return "hot";

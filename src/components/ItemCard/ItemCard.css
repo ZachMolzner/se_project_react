@@ -15,29 +15,42 @@
   transform: scale(1.02);
 }
 
-.card__title {
+/* ==============================
+   CARD HEADER
+   ============================== */
+
+.card__header {
   position: absolute;
   top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 12px;
+  right: 12px;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 3;
+}
+
+.card__title {
   margin: 0;
   padding: 4px 10px;
 
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 4px;
 
-  font-family: Cabinet Grotesk;
+  font-family: "CabinetGrotesk", sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  letter-spacing: 0%;
   color: #00000099;
-  text-align: center;
 
-  z-index: 2;
   white-space: nowrap;
 }
+
+/* ==============================
+   IMAGE
+   ============================== */
 
 .card__image {
   width: 100%;
@@ -45,6 +58,38 @@
   object-fit: cover;
   display: block;
 }
+
+/* ==============================
+   LIKE BUTTON (SPRINT 14)
+   ============================== */
+
+.card__like-button {
+  width: 18px;
+  height: 18px;
+
+  border: none;
+  padding: 0;
+
+  background-color: transparent;
+  background-image: url("../../assets/like.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  cursor: pointer;
+}
+
+.card__like-button:hover {
+  opacity: 0.8;
+}
+
+.card__like-button_active {
+  background-image: url("../../assets/pink_like.svg");
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
 
 @media screen and (max-width: 1200px) {
   .card {
@@ -61,46 +106,12 @@
 
 @media screen and (max-width: 430px) {
   .card {
-    width: 164px !important;
-    height: 164px !important;
+    width: 164px;
+    height: 164px;
     margin: 0 auto;
   }
 
   .card__title {
     font-size: 12px;
-    top: 8px;
   }
-}
-
-/* ==============================
-   LIKE BUTTON (SPRINT 14)
-   ============================== */
-
-.card__like-button {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-
-  width: 18px;
-  height: 18px;
-
-  border: none;
-  padding: 0;
-
-  background-color: transparent;
-  background-image: url("../../images/like-inactive.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-
-  cursor: pointer;
-  z-index: 3;
-}
-
-.card__like-button:hover {
-  opacity: 0.8;
-}
-
-.card__like-button_active {
-  background-image: url("../../images/like-active.svg");
 }

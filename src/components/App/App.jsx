@@ -10,12 +10,12 @@ import ItemModal from "../ItemModal/ItemModal.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal.jsx";
 
-// ✅ REQUIRED MODALS (Sprint 14)
+//  REQUIRED MODALS (Sprint 14)
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 
-// ✅ Items API
+//  Items API
 import {
   getItems,
   addItem,
@@ -25,7 +25,7 @@ import {
   editProfile,
 } from "../../utils/api.js";
 
-// ✅ Auth API
+//  Auth API
 import { register, authorize, checkToken } from "../../utils/auth.js";
 
 // Weather API
@@ -61,11 +61,11 @@ function App() {
 
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
-  // ✅ Sprint 14 auth state
+  //  Sprint 14 auth state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  // ✅ Required auth modals
+  //  Required auth modals
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
@@ -203,7 +203,7 @@ function App() {
       .catch((err) => console.error("Delete error:", err));
   }
 
-  // ---------- ✅ LIKES (SPRINT 14 TASK 4) ----------
+  // ----------  LIKES (SPRINT 14 TASK 4) ----------
   function handleCardLike({ id, isLiked }) {
     const token = localStorage.getItem("jwt");
     if (!token) return;
@@ -291,7 +291,6 @@ function App() {
                 city={weatherData?.city}
                 onAddClothesClick={openAddItemModal}
                 isLoggedIn={isLoggedIn}
-                currentUser={currentUser}
                 onLoginClick={openLoginModal}
                 onRegisterClick={openRegisterModal}
               />
@@ -340,7 +339,6 @@ function App() {
             selectedCard={selectedCard}
             onClose={closeAllModals}
             onDeleteRequest={handleOpenConfirmDelete}
-            currentUserId={currentUser?._id}
           />
 
           {/* ADD ITEM MODAL */}

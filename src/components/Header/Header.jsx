@@ -1,10 +1,12 @@
 // src/components/Header/Header.jsx
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import avatarImage from "../../assets/avatar.svg";
 import logoImage from "../../assets/Logo.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+
+import { CurrentUserContext } from "../../Contexts/CurrentUserContext";
 
 import "./Header.css";
 
@@ -12,12 +14,14 @@ function Header({
   city,
   onAddClothesClick,
   isLoggedIn,
-  currentUser,
   onLoginClick,
   onRegisterClick,
 }) {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  //  Read user from context (Sprint 14 requirement)
+  const currentUser = useContext(CurrentUserContext);
 
   // ---------- DATE FORMATTING ----------
   const today = new Date();
@@ -34,7 +38,7 @@ function Header({
   }
 
   const username = currentUser?.name || "User";
-  const avatarSrc = currentUser?.avatar || avatarImage;
+  const avatarSrc = currentUser?.avatar; // keep consistent with conditional rendering
   const fallbackLetter = username?.trim()?.[0]?.toUpperCase() || "U";
 
   return (
@@ -53,13 +57,10 @@ function Header({
 
         {/* ---------- RIGHT SIDE (DESKTOP) ---------- */}
         <div className="header__right">
-          {/* ToggleSwitch */}
           <ToggleSwitch />
 
-          {/* Auth-aware controls */}
           {isLoggedIn ? (
             <>
-              {/* Add Clothes (authorized only) */}
               <button
                 type="button"
                 className="header__add-clothes"
@@ -68,11 +69,10 @@ function Header({
                 + Add clothes
               </button>
 
-              {/* Profile link */}
               <Link to="/profile" className="header__user">
                 <span className="header__username-button">{username}</span>
 
-                {currentUser?.avatar ? (
+                {avatarSrc ? (
                   <img
                     src={avatarSrc}
                     alt={`${username} avatar`}
@@ -94,6 +94,7 @@ function Header({
               >
                 Sign up
               </button>
+
               <button
                 type="button"
                 className="header__auth-button header__auth-button_secondary"
@@ -135,13 +136,12 @@ function Header({
 
             {isLoggedIn ? (
               <>
-                {/* MOBILE — PROFILE */}
                 <button
                   type="button"
                   className="header__mobile-user-row"
                   onClick={goToProfile}
                 >
-                  {currentUser?.avatar ? (
+                  {avatarSrc ? (
                     <img
                       src={avatarSrc}
                       alt={`${username} avatar`}
@@ -156,7 +156,6 @@ function Header({
                   <span className="header__mobile-name">{username}</span>
                 </button>
 
-                {/* MOBILE — ADD CLOTHES */}
                 <button
                   type="button"
                   className="header__mobile-add"
@@ -170,7 +169,6 @@ function Header({
               </>
             ) : (
               <>
-                {/* MOBILE — AUTH BUTTONS */}
                 <button
                   type="button"
                   className="header__mobile-auth"
@@ -181,6 +179,7 @@ function Header({
                 >
                   Sign up
                 </button>
+
                 <button
                   type="button"
                   className="header__mobile-auth header__mobile-auth_secondary"
@@ -194,7 +193,6 @@ function Header({
               </>
             )}
 
-            {/* MOBILE — TOGGLE SWITCH */}
             <div className="header__mobile-toggle">
               <ToggleSwitch />
             </div>

@@ -1,13 +1,12 @@
 // src/components/ItemModal/ItemModal.jsx
+import { useContext } from "react";
 import "./ItemModal.css";
 
-function ItemModal({
-  selectedCard,
-  isOpen,
-  onClose,
-  onDeleteRequest,
-  currentUserId,
-}) {
+import { CurrentUserContext } from "../../Contexts/CurrentUserContext";
+
+function ItemModal({ selectedCard, isOpen, onClose, onDeleteRequest }) {
+  const currentUser = useContext(CurrentUserContext);
+
   // If closed or no card selected, render nothing
   if (!isOpen || !selectedCard) return null;
 
@@ -17,9 +16,13 @@ function ItemModal({
 
   const imageSrc = selectedCard.imageUrl || selectedCard.link;
 
-  // ✅ Sprint 14: delete button only for owner
+  //  Sprint 14: delete button only for owner (from context)
   const ownerId = selectedCard.owner?._id ?? selectedCard.owner;
-  const isOwn = Boolean(currentUserId && ownerId && ownerId === currentUserId);
+  const currentUserId = currentUser?._id;
+
+  const isOwn = Boolean(
+    currentUserId && ownerId && String(ownerId) === String(currentUserId),
+  );
 
   return (
     <div
