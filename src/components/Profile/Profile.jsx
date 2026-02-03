@@ -3,10 +3,25 @@ import "./Profile.css";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 
-const Profile = ({ clothingItems, onSelectCard, onAddItem }) => {
+const Profile = ({
+  clothingItems,
+  onSelectCard,
+  onAddItem,
+  onCardLike,
+  isLoggedIn,
+  currentUserId,
+  onSignOut,
+  onEditProfile,
+}) => {
+  // ✅ Sprint 14: show only items added by the current user
+  const userItems = clothingItems.filter((item) => {
+    const ownerId = item.owner?._id ?? item.owner; // supports owner as object or string
+    return ownerId === currentUserId;
+  });
+
   return (
     <section className="profile">
-      <SideBar />
+      <SideBar onEditProfile={onEditProfile} onSignOut={onSignOut} />
 
       <div className="profile__clothes-area">
         <div className="profile__header-row">
@@ -21,8 +36,11 @@ const Profile = ({ clothingItems, onSelectCard, onAddItem }) => {
         </div>
 
         <ClothesSection
-          clothingItems={clothingItems}
+          clothingItems={userItems}
           onSelectCard={onSelectCard}
+          onCardLike={onCardLike}
+          isLoggedIn={isLoggedIn}
+          currentUserId={currentUserId}
         />
       </div>
     </section>

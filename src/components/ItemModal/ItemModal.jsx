@@ -1,7 +1,13 @@
 // src/components/ItemModal/ItemModal.jsx
 import "./ItemModal.css";
 
-function ItemModal({ selectedCard, isOpen, onClose, onDeleteRequest }) {
+function ItemModal({
+  selectedCard,
+  isOpen,
+  onClose,
+  onDeleteRequest,
+  currentUserId,
+}) {
   // If closed or no card selected, render nothing
   if (!isOpen || !selectedCard) return null;
 
@@ -10,6 +16,10 @@ function ItemModal({ selectedCard, isOpen, onClose, onDeleteRequest }) {
   };
 
   const imageSrc = selectedCard.imageUrl || selectedCard.link;
+
+  // ✅ Sprint 14: delete button only for owner
+  const ownerId = selectedCard.owner?._id ?? selectedCard.owner;
+  const isOwn = Boolean(currentUserId && ownerId && ownerId === currentUserId);
 
   return (
     <div
@@ -35,13 +45,16 @@ function ItemModal({ selectedCard, isOpen, onClose, onDeleteRequest }) {
         <div className="item-modal__info">
           <div className="item-modal__info-row">
             <p className="item-modal__name">{selectedCard.name}</p>
-            <button
-              type="button"
-              className="item-modal__delete"
-              onClick={() => onDeleteRequest(selectedCard)}
-            >
-              Delete item
-            </button>
+
+            {isOwn && (
+              <button
+                type="button"
+                className="item-modal__delete"
+                onClick={() => onDeleteRequest(selectedCard)}
+              >
+                Delete item
+              </button>
+            )}
           </div>
 
           <p className="item-modal__weather">Weather: {selectedCard.weather}</p>

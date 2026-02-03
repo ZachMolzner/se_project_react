@@ -1,133 +1,165 @@
-🧥 WTWR – What To Wear Right Now
+# 🧥 WTWR – What To Wear Right Now
 
-A responsive, weather-based clothing recommendation app built with React + Vite.
-WTWR displays the user’s local weather conditions and recommends appropriate clothing items based on temperature. Users can add their own items, preview them in a modal, and browse items filtered by weather type (“hot,” “warm,” or “cold”).
-The interface updates dynamically between day and night and adapts smoothly across desktop, tablet, and mobile layouts.
+A responsive, weather-based clothing recommendation app built with **React + Vite**.
 
-⭐ Features
-🌤 Real-Time Weather Display
+WTWR displays the user’s local weather conditions and recommends appropriate clothing items based on temperature. Users can register, log in, add their own clothing items, like items, preview them in a modal, and browse clothing filtered by weather type (“hot,” “warm,” or “cold”).
 
-Fetches live data from a weather API
+The interface dynamically adapts between day and night and is fully responsive across desktop, tablet, and mobile devices.
 
-Detects temperature, weather condition, city, and day/night cycle
+---
 
-Parses raw weather into simplified categories: hot, warm, cold
+## ⭐ Features
 
-👕 Dynamic Clothing Recommendations
+### 🌤 Real-Time Weather Display
 
-Displays user-added clothing that matches the weather
+- Fetches live data from a weather API
+- Detects temperature, city, and day/night cycle
+- Converts raw weather data into simplified categories: **hot**, **warm**, **cold**
 
-Items open in a full-size modal preview
+### 👕 Dynamic Clothing Recommendations
 
-Clothing grid is organized by type for easy browsing
+- Displays clothing items that match the current weather
+- Items open in a full-size preview modal
+- Clothing is filtered automatically based on temperature
 
-➕ Add New Garments
+### ➕ Add New Garments
 
-Modal form allows users to upload and name clothing items
+- Authorized users can add new clothing items
+- Items render instantly after submission
+- Each item is associated with the user who created it
 
-Items render instantly on the main grid
+### ❤️ Like / Unlike Items
 
-🌓 Automatic Day/Night Theme
+- Logged-in users can like and unlike clothing items
+- Likes are persisted in the backend database
+- UI updates instantly to reflect changes
 
-UI theme adjusts based on sunrise and sunset
+### 🔐 Authentication & Authorization
 
-Weather card, header, and background adapt to time of day
+- User registration and login
+- JWT-based authentication
+- Protected profile route
+- Persistent login using localStorage
 
-📱 Fully Responsive UI
+### 🌓 Day / Night UI Behavior
 
-Custom layouts for desktop, tablet, and mobile
+- UI reflects day or night based on sunrise/sunset
+- Weather visuals adjust automatically
 
-Includes hamburger menu + compact mobile header card
+### 📱 Fully Responsive Design
 
-Scales smoothly down to 375px mobile width
+- Optimized for desktop, tablet, and mobile
+- Hamburger menu for mobile navigation
+- Layout scales smoothly down to 375px width
 
-🔒 Clean, Scalable Architecture
+---
 
-Modular React components (Header, Main, Footer, Cards, Modals)
+## 🚀 Live Demo
 
-Weather utility functions:
+🎥 **Video Demo**
+[https://youtu.be/pGzW_MDcuLc](https://youtu.be/pGzW_MDcuLc)
 
-getCurrentWeather
+(Deployment optional for this project)
 
-parseWeatherData
+---
 
-getWeatherCondition
+## 🛠 Technologies Used
 
-CSS organized using BEM methodology
+### Frontend
 
-🚀 Live Demo
+- React
+- Vite
+- JavaScript (ES6+)
+- CSS (BEM methodology)
+- Responsive media queries
 
-(Replace this with your deployed link once ready)
+### Backend
 
-GitHub Repository:
-https://github.com/ZachMolzner/se_project_react.git
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT Authentication
 
-🛠 Technologies Used
-Frontend
+### Tools & Libraries
 
-React
+- React Hooks (`useState`, `useEffect`, `useContext`)
+- Fetch API
+- Git & GitHub
 
-Vite
+### APIs
 
-JavaScript (ES6+)
+- Weather API (OpenWeatherMap or equivalent)
+- Custom weather utility functions:
+  - `getCurrentWeather`
+  - `parseWeatherData`
+  - `getWeatherCondition`
 
-CSS (BEM)
+---
 
-Responsive Media Queries
+## 📂 Repositories
 
-Tools & Libraries
+**Frontend Repository**
+[https://github.com/ZachMolzner/se_project_react](https://github.com/ZachMolzner/se_project_react)
 
-React Hooks (useState, useEffect)
+**Backend Repository**
+[https://github.com/ZachMolzner/se_project_express](https://github.com/ZachMolzner/se_project_express)
 
-Git & GitHub
+---
 
-GitHub Pages (optional deployment)
+## 🧪 Installation & Setup
 
-Fetch API
+### 1. Clone the frontend repository
 
-APIs
+```bash
+git clone https://github.com/ZachMolzner/se_project_react.git
+cd se_project_react
+```
 
-Custom weather utility functions
+### 2. Install dependencies
 
-OpenWeatherMap (or chosen weather provider)
+```bash
+npm install
+```
 
-🧪 Installation & Setup
+### 3. Run the development server
 
-1. Clone the repository
-   git clone https://github.com/ZachMolzner/se_project_react.git
-   cd se_project_react
+```bash
+npm run dev
+```
 
-2. Install dependencies
-   npm install
+### 4. Build for production
 
-3. Run the development server
-   npm run dev
+```bash
+npm run build
+```
 
-4. Build for production
-   npm run build
+---
 
-🔧 Environment Variables (Weather API)
+## 🔧 Environment Variables
 
-Create a .env file:
+Create a `.env` file in the root directory:
 
+```env
 VITE_WEATHER_API_KEY=your_api_key_here
 VITE_WEATHER_BASE_URL=https://api.openweathermap.org/data/2.5/
+```
 
-📌 Future Improvements
+---
 
-User authentication
+## 📌 Future Improvements
 
-“Favorite” clothing items
+- Edit profile functionality
+- Delete clothing items directly from profile
+- Favorites filter
+- Dark mode toggle
+- Multi-language support
 
-Edit/delete clothing items
+---
 
-Multi-language support
+## 👤 Author
 
-Dark mode override setting
-
-👤 Author
-
-Zach Molzner
+**Zach Molzner**
 Software Engineer Trainee – TripleTen
-GitHub: https://github.com/ZachMolzner
-Video Demo - https://youtu.be/pGzW_MDcuLc
+
+GitHub: [https://github.com/ZachMolzner](https://github.com/ZachMolzner)

@@ -71,3 +71,36 @@
     top: 8px;
   }
 }
+
+/* ==============================
+   LIKE BUTTON (SPRINT 14)
+   ============================== */
+
+.card__like-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 18px;
+  height: 18px;
+
+  border: none;
+  padding: 0;
+
+  background-color: transparent;
+  background-image: url("../../images/like-inactive.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  cursor: pointer;
+  z-index: 3;
+}
+
+.card__like-button:hover {
+  opacity: 0.8;
+}
+
+.card__like-button_active {
+  background-image: url("../../images/like-active.svg");
+}

@@ -6,7 +6,14 @@ import WeatherCard from "../WeatherCard/WeatherCard.jsx";
 import ItemCard from "../ItemCard/ItemCard.jsx";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherData, clothingItems = [], onSelectCard }) {
+function Main({
+  weatherData,
+  clothingItems = [],
+  onSelectCard,
+  onCardLike,
+  isLoggedIn,
+  currentUserId,
+}) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   if (!weatherData) {
@@ -38,7 +45,16 @@ function Main({ weatherData, clothingItems = [], onSelectCard }) {
         {filteredItems.map((item) => {
           const key = item.id ?? item._id ?? `${item.name}-${item.imageUrl}`;
 
-          return <ItemCard key={key} card={item} onCardClick={onSelectCard} />;
+          return (
+            <ItemCard
+              key={key}
+              card={item}
+              onCardClick={onSelectCard}
+              onCardLike={onCardLike}
+              isLoggedIn={isLoggedIn}
+              currentUserId={currentUserId}
+            />
+          );
         })}
       </ul>
     </main>
