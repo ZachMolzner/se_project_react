@@ -1,21 +1,19 @@
 // src/components/ItemCard/ItemCard.jsx
 import "./ItemCard.css";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../Contexts/CurrentUserContext";
 
-function ItemCard({
-  card,
-  onCardClick,
-  onCardLike,
-  isLoggedIn,
-  currentUserId,
-}) {
+function ItemCard({ card, onCardClick, onCardLike, isLoggedIn }) {
+  const currentUser = useContext(CurrentUserContext);
+  const currentUserId = currentUser?._id;
+
   const cardImage = card.imageUrl || card.link;
 
-  // ✅ Robust like check (supports string IDs or populated objects)
   const isLiked =
     isLoggedIn &&
     currentUserId &&
     Array.isArray(card.likes) &&
-    card.likes.some((like) => (like._id ?? like) === currentUserId);
+    card.likes.some((like) => (like?._id ?? like) === currentUserId);
 
   const handleLikeClick = (e) => {
     e.stopPropagation(); // prevents opening the item modal

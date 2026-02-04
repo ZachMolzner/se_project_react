@@ -1,14 +1,17 @@
 // src/components/ClothesSection/ClothesSection.jsx
 import "./ClothesSection.css";
+import { useContext } from "react";
 import ItemCard from "../ItemCard/ItemCard";
+import { CurrentUserContext } from "../../Contexts/CurrentUserContext";
 
 function ClothesSection({
   clothingItems,
   onSelectCard,
   onCardLike,
   isLoggedIn,
-  currentUserId,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <section className="clothes">
       <ul className="clothes__list">
@@ -23,7 +26,6 @@ function ClothesSection({
               onCardClick={onSelectCard}
               onCardLike={onCardLike}
               isLoggedIn={isLoggedIn}
-              currentUserId={currentUserId}
             />
           );
         })}

@@ -146,8 +146,16 @@
   accent-color: #000000;
 }
 
-.modal__submit {
+/* ---------- ACTION BUTTON ROW ---------- */
+.modal__actions {
   margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Primary submit button */
+.modal__submit {
   align-self: flex-start;
 
   width: 140px;
@@ -188,6 +196,35 @@
   outline-offset: 2px;
 }
 
+/* Secondary "or Sign Up" button */
+.modal__secondary {
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #000000;
+  opacity: 0.6;
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: opacity 0.2s ease;
+}
+
+.modal__secondary:hover {
+  opacity: 1;
+}
+
+.modal__secondary:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---------- MOBILE ---------- */
 @media screen and (max-width: 600px) {
   .modal__content {
     width: 90%;
@@ -201,8 +238,18 @@
     margin-bottom: 20px;
   }
 
+  .modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
   .modal__submit {
     width: 100%;
     align-self: stretch;
+  }
+
+  .modal__secondary {
+    text-align: center;
   }
 }

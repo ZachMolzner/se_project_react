@@ -12,7 +12,6 @@ function Main({
   onSelectCard,
   onCardLike,
   isLoggedIn,
-  currentUserId,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
@@ -52,7 +51,6 @@ function Main({
               onCardClick={onSelectCard}
               onCardLike={onCardLike}
               isLoggedIn={isLoggedIn}
-              currentUserId={currentUserId}
             />
           );
         })}

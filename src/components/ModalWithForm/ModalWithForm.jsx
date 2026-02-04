@@ -10,6 +10,10 @@ function ModalWithForm({
   onSubmit,
   children,
   isSubmitDisabled = false,
+
+  //  NEW (optional) secondary action for "or Sign Up" / "or Log In"
+  secondaryButtonText,
+  onSecondaryClick,
 }) {
   const handleOverlayClick = (e) => {
     // click on dark background closes modal
@@ -21,6 +25,10 @@ function ModalWithForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(e);
+  };
+
+  const handleSecondaryClick = () => {
+    if (onSecondaryClick) onSecondaryClick();
   };
 
   return (
@@ -43,13 +51,26 @@ function ModalWithForm({
         <form className="modal__form" name={name} onSubmit={handleSubmit}>
           {children}
 
-          <button
-            className="modal__submit"
-            type="submit"
-            disabled={isSubmitDisabled}
-          >
-            {buttonText}
-          </button>
+          {/*  Button row: submit on left, optional secondary on right */}
+          <div className="modal__actions">
+            <button
+              className="modal__submit"
+              type="submit"
+              disabled={isSubmitDisabled}
+            >
+              {buttonText}
+            </button>
+
+            {secondaryButtonText && onSecondaryClick && (
+              <button
+                className="modal__secondary"
+                type="button"
+                onClick={handleSecondaryClick}
+              >
+                {secondaryButtonText}
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>

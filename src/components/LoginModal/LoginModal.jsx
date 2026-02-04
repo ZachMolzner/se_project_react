@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 
-function LoginModal({ isOpen, onClose, onLogin }) {
+function LoginModal({ isOpen, onClose, onLogin, onSignUpClick }) {
   const { values, handleChange, resetForm } = useForm({
     email: "",
     password: "",
@@ -23,6 +23,11 @@ function LoginModal({ isOpen, onClose, onLogin }) {
     onLogin(values);
   };
 
+  const handleSignUp = () => {
+    // switch from login → register
+    onSignUpClick();
+  };
+
   return (
     <ModalWithForm
       name="login"
@@ -32,6 +37,8 @@ function LoginModal({ isOpen, onClose, onLogin }) {
       onClose={onClose}
       onSubmit={handleSubmit}
       isSubmitDisabled={isSubmitDisabled}
+      secondaryButtonText="or Sign Up"
+      onSecondaryClick={handleSignUp}
     >
       <label className="modal__label">
         Email

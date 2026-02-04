@@ -1,7 +1,9 @@
 // src/components/Profile/Profile.jsx
 import "./Profile.css";
+import { useContext } from "react";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
+import { CurrentUserContext } from "../../Contexts/CurrentUserContext";
 
 const Profile = ({
   clothingItems,
@@ -9,11 +11,13 @@ const Profile = ({
   onAddItem,
   onCardLike,
   isLoggedIn,
-  currentUserId,
   onSignOut,
   onEditProfile,
 }) => {
-  // ✅ Sprint 14: show only items added by the current user
+  const currentUser = useContext(CurrentUserContext);
+  const currentUserId = currentUser?._id;
+
+  //  Sprint 14: show only items added by the current user
   const userItems = clothingItems.filter((item) => {
     const ownerId = item.owner?._id ?? item.owner; // supports owner as object or string
     return ownerId === currentUserId;
@@ -40,7 +44,6 @@ const Profile = ({
           onSelectCard={onSelectCard}
           onCardLike={onCardLike}
           isLoggedIn={isLoggedIn}
-          currentUserId={currentUserId}
         />
       </div>
     </section>

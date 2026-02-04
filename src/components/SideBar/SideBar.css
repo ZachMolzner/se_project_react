@@ -4,9 +4,8 @@
 
 .sidebar {
   display: flex;
-  flex-direction: row; /* ← side-by-side for desktop */
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 24px;
   width: 200px;
   box-sizing: border-box;
 }
@@ -17,25 +16,53 @@
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
+}
+
+/* User info wrapper */
+.sidebar__info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* Username */
 .sidebar__name {
-  font-family: "CabinetGrotesk", sans-serif;
+  font-family: "Cabinet Grotesk", sans-serif;
   font-weight: 700;
   font-size: 20px;
   margin: 0;
 }
 
-/* Hide mobile links on desktop */
+/* Sidebar buttons (Edit profile / Log out) */
 .sidebar__link {
-  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+
+  color: #00000099;
+  text-align: left;
+
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__link:hover {
+  opacity: 0.7;
+}
+
+.sidebar__link:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* ============================================
    MOBILE MODE — ≤ 430px
-   (unchanged — still matches Figma EXACTLY)
+   (kept aligned with Figma)
    ============================================ */
 
 @media screen and (max-width: 430px) {
@@ -76,11 +103,8 @@
   }
 
   .sidebar__link {
-    display: block;
-    font-family: "Cabinet Grotesk", sans-serif;
     font-size: 16px;
     line-height: 20px;
     color: #00000099;
-    margin: 0;
   }
 }

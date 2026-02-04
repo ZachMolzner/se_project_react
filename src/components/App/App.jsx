@@ -1,3 +1,4 @@
+// src/components/App/App.jsx
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -10,12 +11,12 @@ import ItemModal from "../ItemModal/ItemModal.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal.jsx";
 
-//  REQUIRED MODALS (Sprint 14)
+// REQUIRED MODALS (Sprint 14)
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 
-//  Items API
+// Items API
 import {
   getItems,
   addItem,
@@ -25,7 +26,7 @@ import {
   editProfile,
 } from "../../utils/api.js";
 
-//  Auth API
+// Auth API
 import { register, authorize, checkToken } from "../../utils/auth.js";
 
 // Weather API
@@ -53,31 +54,29 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
-
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
-
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [itemPendingDelete, setItemPendingDelete] = useState(null);
 
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
-  //  Sprint 14 auth state
+  // Auth state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  //  Required auth modals
+  // Auth modals
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
 
-  // ---------- LOAD CLOTHING ITEMS (PUBLIC) ----------
+  // ---------- LOAD ITEMS ----------
   useEffect(() => {
     getItems()
-      .then((items) => setClothingItems(items))
+      .then(setClothingItems)
       .catch((err) => console.error("Error loading items:", err));
   }, []);
 
-  // ---------- TOKEN CHECK ON LOAD ----------
+  // ---------- TOKEN CHECK ----------
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (!token) return;
@@ -87,39 +86,32 @@ function App() {
         setCurrentUser(userData);
         setIsLoggedIn(true);
       })
-      .catch((err) => {
-        console.error("Token check failed:", err);
+      .catch(() => {
         localStorage.removeItem("jwt");
         setIsLoggedIn(false);
         setCurrentUser({});
       });
   }, []);
 
-  // ---------- LOAD WEATHER ----------
+  // ---------- WEATHER ----------
   useEffect(() => {
     getCurrentWeather()
       .then((data) => {
         const parsed = parseWeatherData(data);
         const tempF = parsed.temperature;
 
-        const isDay =
-          parsed.currentTime >= parsed.sunrise &&
-          parsed.currentTime <= parsed.sunset;
-
-        const weatherType = getWeatherCondition(tempF);
-
-        const weatherForState = {
+        setWeatherData({
           city: parsed.city,
           condition: parsed.condition,
-          isDay,
-          weatherType,
+          isDay:
+            parsed.currentTime >= parsed.sunrise &&
+            parsed.currentTime <= parsed.sunset,
+          weatherType: getWeatherCondition(tempF),
           temperature: {
             F: tempF,
             C: Math.round((tempF - 32) * (5 / 9)),
           },
-        };
-
-        setWeatherData(weatherForState);
+        });
       })
       .catch((err) => console.error("Weather error:", err));
   }, []);
@@ -129,57 +121,41 @@ function App() {
     setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
   }
 
-  // ---------- OPEN MODALS ----------
-  function openAddItemModal() {
-    setIsAddItemModalOpen(true);
-  }
+  // ---------- MODAL OPENERS ----------
+  const openAddItemModal = () => setIsAddItemModalOpen(true);
+  const openRegisterModal = () => setIsRegisterModalOpen(true);
+  const openLoginModal = () => setIsLoginModalOpen(true);
+  const openEditProfileModal = () => setIsEditProfileModalOpen(true);
 
-  function openRegisterModal() {
+  // ---------- MODAL SWITCHERS (FIGMA REQUIRED) ----------
+  function handleSwitchToRegister() {
+    setIsLoginModalOpen(false);
     setIsRegisterModalOpen(true);
   }
 
-  function openLoginModal() {
+  function handleSwitchToLogin() {
+    setIsRegisterModalOpen(false);
     setIsLoginModalOpen(true);
   }
 
-  function openEditProfileModal() {
-    setIsEditProfileModalOpen(true);
-  }
-
-  // ---------- UNIVERSAL MODAL CLOSER ----------
+  // ---------- CLOSE ALL MODALS ----------
   function closeAllModals() {
     setIsItemModalOpen(false);
     setIsAddItemModalOpen(false);
     setIsConfirmModalOpen(false);
-
     setIsRegisterModalOpen(false);
     setIsLoginModalOpen(false);
     setIsEditProfileModalOpen(false);
-
     setSelectedCard(null);
     setItemPendingDelete(null);
   }
 
-  // ---------- CARD / ITEM MODAL ----------
+  // ---------- CARD HANDLERS ----------
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsItemModalOpen(true);
   }
 
-  // ---------- ADD ITEM ----------
-  function handleAddItemSubmit({ name, weather, imageUrl }) {
-    const token = localStorage.getItem("jwt");
-    if (!token) return;
-
-    addItem({ name, weather, imageUrl }, token)
-      .then((newItem) => {
-        setClothingItems((prev) => [newItem, ...prev]);
-        closeAllModals();
-      })
-      .catch((err) => console.error("Add item error:", err));
-  }
-
-  // ---------- DELETE CONFIRMATION FLOW ----------
   function handleOpenConfirmDelete(card) {
     setItemPendingDelete(card);
     setIsConfirmModalOpen(true);
@@ -187,65 +163,67 @@ function App() {
 
   function handleConfirmDelete() {
     if (!itemPendingDelete) return;
-
     const token = localStorage.getItem("jwt");
     if (!token) return;
 
     const id = itemPendingDelete._id ?? itemPendingDelete.id;
-
     deleteItem(id, token)
-      .then(() => {
+      .then(() =>
         setClothingItems((prev) =>
-          prev.filter((item) => item._id !== id && item.id !== id),
-        );
-        closeAllModals();
-      })
+          prev.filter((item) => (item._id ?? item.id) !== id),
+        ),
+      )
+      .then(closeAllModals)
       .catch((err) => console.error("Delete error:", err));
   }
 
-  // ----------  LIKES (SPRINT 14 TASK 4) ----------
+  // ---------- ADD ITEM ----------
+  function handleAddItemSubmit(item) {
+    const token = localStorage.getItem("jwt");
+    if (!token) return;
+
+    addItem(item, token)
+      .then((newItem) => setClothingItems((prev) => [newItem, ...prev]))
+      .then(closeAllModals)
+      .catch((err) => console.error("Add item error:", err));
+  }
+
+  // ---------- LIKES ----------
   function handleCardLike({ id, isLiked }) {
     const token = localStorage.getItem("jwt");
     if (!token) return;
 
-    const request = !isLiked
-      ? addCardLike(id, token)
-      : removeCardLike(id, token);
+    const request = isLiked
+      ? removeCardLike(id, token)
+      : addCardLike(id, token);
 
     request
-      .then((updatedCard) => {
-        setClothingItems((cards) =>
-          cards.map((item) =>
+      .then((updatedCard) =>
+        setClothingItems((items) =>
+          items.map((item) =>
             (item._id ?? item.id) === id ? updatedCard : item,
           ),
-        );
-
-        if (selectedCard && (selectedCard._id ?? selectedCard.id) === id) {
-          setSelectedCard(updatedCard);
-        }
-      })
+        ),
+      )
       .catch((err) => console.error("Like error:", err));
   }
 
-  // ---------- AUTH HANDLERS ----------
-  function handleRegister({ name, avatar, email, password }) {
-    return register({ name, avatar, email, password })
-      .then(() => handleLogin({ email, password }))
-      .catch((err) => console.error("Register error:", err));
+  // ---------- AUTH ----------
+  function handleRegister(data) {
+    return register(data).then(() =>
+      handleLogin({ email: data.email, password: data.password }),
+    );
   }
 
   function handleLogin({ email, password }) {
     return authorize({ email, password })
       .then((res) => {
-        if (!res?.token) return Promise.reject(new Error("No token returned"));
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         return checkToken(res.token);
       })
-      .then((userData) => {
-        setCurrentUser(userData);
-        closeAllModals();
-      })
+      .then(setCurrentUser)
+      .then(closeAllModals)
       .catch((err) => console.error("Login error:", err));
   }
 
@@ -256,27 +234,21 @@ function App() {
     closeAllModals();
   }
 
-  // ---------- EDIT PROFILE ----------
-  function handleEditProfile({ name, avatar }) {
+  function handleEditProfile(data) {
     const token = localStorage.getItem("jwt");
     if (!token) return;
 
-    editProfile({ name, avatar }, token)
-      .then((updatedUser) => {
-        setCurrentUser(updatedUser);
-        closeAllModals();
-      })
+    editProfile(data, token)
+      .then(setCurrentUser)
+      .then(closeAllModals)
       .catch((err) => console.error("Edit profile error:", err));
   }
 
-  // ---------- ESCAPE KEY HANDLER ----------
+  // ---------- ESC KEY ----------
   useEffect(() => {
-    const closeByEscape = (e) => {
-      if (e.key === "Escape") closeAllModals();
-    };
-
-    document.addEventListener("keydown", closeByEscape);
-    return () => document.removeEventListener("keydown", closeByEscape);
+    const onEsc = (e) => e.key === "Escape" && closeAllModals();
+    document.addEventListener("keydown", onEsc);
+    return () => document.removeEventListener("keydown", onEsc);
   }, []);
 
   return (
@@ -305,11 +277,9 @@ function App() {
                       onSelectCard={handleCardClick}
                       onCardLike={handleCardLike}
                       isLoggedIn={isLoggedIn}
-                      currentUserId={currentUser?._id}
                     />
                   }
                 />
-
                 <Route
                   path="/profile"
                   element={
@@ -322,7 +292,6 @@ function App() {
                         onEditProfile={openEditProfileModal}
                         onCardLike={handleCardLike}
                         isLoggedIn={isLoggedIn}
-                        currentUserId={currentUser?._id}
                       />
                     </ProtectedRoute>
                   }
@@ -333,7 +302,7 @@ function App() {
             </div>
           </div>
 
-          {/* ITEM PREVIEW MODAL */}
+          {/* MODALS */}
           <ItemModal
             isOpen={isItemModalOpen}
             selectedCard={selectedCard}
@@ -341,31 +310,30 @@ function App() {
             onDeleteRequest={handleOpenConfirmDelete}
           />
 
-          {/* ADD ITEM MODAL */}
           <AddItemModal
             isOpen={isAddItemModalOpen}
             onClose={closeAllModals}
             onAddItem={handleAddItemSubmit}
           />
 
-          {/* DELETE CONFIRM */}
           <DeleteConfirmationModal
             isOpen={isConfirmModalOpen}
             onClose={closeAllModals}
             onConfirm={handleConfirmDelete}
           />
 
-          {/* REQUIRED AUTH MODALS */}
           <RegisterModal
             isOpen={isRegisterModalOpen}
             onClose={closeAllModals}
             onRegister={handleRegister}
+            onLoginClick={handleSwitchToLogin}
           />
 
           <LoginModal
             isOpen={isLoginModalOpen}
             onClose={closeAllModals}
             onLogin={handleLogin}
+            onSignUpClick={handleSwitchToRegister}
           />
 
           <EditProfileModal
