@@ -1,7 +1,6 @@
-const baseUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://api.climatecloset.jumpingcrab.com"
-    : "http://localhost:3001";
+const baseUrl = import.meta.env.PROD
+  ? "https://api.climatecloset.jumpingcrab.com"
+  : "http://localhost:3001";
 
 //  Import shared response handler
 import { checkResponse } from "./api.js";
